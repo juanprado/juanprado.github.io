@@ -59,7 +59,7 @@ MOMANDMESCARF.carousel = {
 		this.slideshow.bxSlider({
 			mode: 'fade',
 			auto: true,
-			pause: 5000,
+			pause: 6500,
 			pager: false,
 			controls: false
 		});
@@ -67,3 +67,32 @@ MOMANDMESCARF.carousel = {
 };
 
 MOMANDMESCARF.carousel.init();
+
+// IMAGE PICKER
+
+MOMANDMESCARF.imagePicker = {
+
+	cacheElems: function() {
+		this.imagePicker = $('.image-picker img');
+		this.mainImage = $('.main-image');
+	},
+
+	imagePickerBind: function() {
+		var self = this;
+
+		this.imagePicker.on('click', function() {
+			var src = $(this).attr('src');
+
+			self.imagePicker.removeClass('active');
+			self.mainImage.attr('src', src);
+			$(this).addClass('active');
+		});
+	},
+
+	init: function() {
+		this.cacheElems();
+		this.imagePickerBind();
+	}
+};
+
+MOMANDMESCARF.imagePicker.init();
