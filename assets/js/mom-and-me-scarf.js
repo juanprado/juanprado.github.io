@@ -96,3 +96,76 @@ MOMANDMESCARF.imagePicker = {
 };
 
 MOMANDMESCARF.imagePicker.init();
+
+// STICKY NAV
+
+MOMANDMESCARF.stickyNav = {
+
+	cacheElems: function() {
+		this.nav = $('.customer-care nav');
+		this.navLink = this.nav.find('a');
+		this.section = $('.customer-care section');
+	},
+
+	navLinkBind: function() {
+		var self = this;
+
+		this.navLink.on('click', function() {
+			var id = $(this).data('href');
+			var position = $(id).offset().top;
+			self.scrollAnimation(position);
+		});
+	},
+
+	setStickyNav: function() {
+		var scrollTop = $(window).scrollTop();
+
+		if (scrollTop > this.topPosition) {
+			this.nav.addClass('sticky');
+			this.setHorizontalPosition();
+		} else {
+			this.nav.removeClass('sticky');
+			this.nav.removeAttr('style');
+		}
+	},
+
+	stickyNavInit: function() {
+		this.topPosition = this.nav.offset().top;
+		var self = this;
+
+		$(window).scroll(function() {
+			self.setStickyNav();
+		});
+	},
+
+	setHorizontalPosition: function() {
+		var leftPosition = this.section.offset().left;
+		this.nav.css('left', leftPosition);
+	},
+
+	onWindowResize: function() {
+		var self = this;
+
+		$(window).resize(function() {
+			if (self.nav.hasClass('sticky')) {
+				self.setHorizontalPosition();
+			} 
+		});
+	},
+
+	scrollAnimation: function(position) {
+		$('html, body').animate({
+			scrollTop: position
+		}, 1000);
+	},
+
+	init: function() {
+		this.cacheElems();
+		this.navLinkBind();
+		this.stickyNavInit();
+		this.onWindowResize();
+	}
+
+};
+
+MOMANDMESCARF.stickyNav.init();
